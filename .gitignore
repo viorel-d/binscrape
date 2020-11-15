@@ -1,0 +1,6 @@
+mongo/data
+.git/*
+frontend/node_modules
+frontend/.env
+backend/.venv
+

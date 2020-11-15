@@ -1,0 +1,4 @@
+**/*.Dockerfile
+mongo/*
+docker-compose.yml
+.git

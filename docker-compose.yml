@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Development.Dockerfile
+    volumes:
+      - './backend:/backend/'
+    links:
+      - mongo
+    ports: 
+      - '8000:8000'
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Development.Dockerfile
+    volumes: 
+      - './frontend:/frontend/'
+      - '/frontend/node_modules'
+    links:
+      - backend
+    ports: 
+      - '9000:9000'
+
+  mongo:
+    image: 'mongo:latest'
+    restart: always
+    environment: 
+      MONGO_INITDB_DATABASE: pasteBinItems
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass1337
+    volumes:
+      - './mongo/init/init.js:/docker-entrypoint-initdb.d/init.js'
+      - './mongo/data:/data/db'
+    ports:
+      - '27017:27017'
